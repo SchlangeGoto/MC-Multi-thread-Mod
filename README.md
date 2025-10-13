@@ -1,4 +1,4 @@
-# MC-thread-outsource
+# MC-multi-thread
 
 Roadmap
 Client optimizations:
