@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "mc-multi-thread-fabric",
+  "version": "${version}",
+  "name": "MC-Multi-thread-Fabric",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/mc-multi-thread-fabric/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "dev.kkazi.mcMultiThreadFabric.client.McMultiThreadFabricDataGenerator"
+    ],
+    "client": [
+      "dev.kkazi.mcMultiThreadFabric.client.McMultiThreadFabricClient"
+    ],
+    "main": [
+      "dev.kkazi.mcMultiThreadFabric.McMultiThreadFabric"
+    ]
+  },
+  "mixins": [
+    "mc-multi-thread-fabric.mixins.json",
+    {
+      "config": "mc-multi-thread-fabric.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
