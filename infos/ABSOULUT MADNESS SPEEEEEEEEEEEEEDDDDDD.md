@@ -58,18 +58,28 @@ byte[] flags = new byte[MAX_ENTITIES];
 ## 4. PARTITIONING: Static Assignment (NO sorting after parallel)
 
 ```java
-// ONCE at world load: Sort by entity ID
-Arrays.sort(entityIds);
+// DON'T SORT AT ALL!
 
-// Assign fixed ranges to cores (never changes)
-int chunkSize = entityCount / CORES;
-core0: processes indices [0...chunkSize-1]
-core1: processes indices [chunkSize...chunkSize*2-1]
-// etc
+// 1. Entities already in correct order (vanilla list)
+List<Entity> entities = world.getEntities();
 
-// NO DYNAMIC WORK STEALING
-// NO QUEUE
-// NO SORTING AFTER PARALLEL
+// 2. Partition into fixed ranges (preserves order)
+int chunk = entities.size() / CORES;
+Thread 0: [0 .. chunk-1]
+Thread 1: [chunk .. chunk*2-1]
+...
+
+// 3. Each thread writes to its own section
+float[] results = new float[entities.size()];
+thread0 writes to results[0..chunk-1]
+thread1 writes to results[chunk..chunk*2-1]
+
+// 4. Main thread reads sequentially (already in order!)
+for (int i = 0; i < entities.size(); i++) {
+    entities.get(i).applyResult(results[i]);
+}
+
+// NO SORTING NEEDED! Order preserved naturally.
 ```
 
 **Why:** Zero synchronization, perfect cache locality, deterministic order maintained
