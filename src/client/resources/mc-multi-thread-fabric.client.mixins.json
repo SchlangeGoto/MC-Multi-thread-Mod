@@ -11,5 +11,9 @@
   },
   "overwrites": {
     "requireAnnotations": true
-  }
+  },
+  "mixins": [
+    "entityTicking.EntitiyThreadSafety",
+    "entityTicking.ModifyEntityList"
+  ]
 }
