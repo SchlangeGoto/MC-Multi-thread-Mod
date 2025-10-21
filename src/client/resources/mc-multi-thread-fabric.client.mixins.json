@@ -14,6 +14,10 @@
   },
   "mixins": [
     "entityTicking.EntitiyThreadSafety",
-    "entityTicking.ModifyEntityList"
+    "entityTicking.MakeRemoveThreadSafe",
+    "entityTicking.MakeSectionedCacheSafe",
+    "entityTicking.ModifyEntityList",
+    "entityTicking.RemoveLock",
+    "entityTicking.ThreadSafeWorld"
   ]
 }
